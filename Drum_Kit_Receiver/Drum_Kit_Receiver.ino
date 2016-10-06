@@ -3,9 +3,9 @@
 */
 
 
-const int tamPin = 9;
-const int drumPin = 10;
-const int kickPin = 11;
+const int tamPin = 10;
+const int drumPin = 11;
+const int kickPin = 9;
 
 const int measure = 4;
 
