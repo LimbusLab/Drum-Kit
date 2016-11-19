@@ -4,8 +4,8 @@
 
 
 const int tamPin = 10;
-const int drumPin = 11;
-const int kickPin = 9;
+const int drumPin = 9;
+const int kickPin = 11;
 
 const int measure = 4;
 
@@ -14,7 +14,7 @@ const int delayTime = 50;
 int tam[measure] = {0,0,0,0};
 int drum[measure] = {0,0,0,0};
 int kick[measure] = {0,0,0,0};
-int beat = 0;
+int beat = 200;
 
 void setup() {
   Serial.begin(115200);
@@ -56,14 +56,14 @@ void loop() {
 }
 
 void turnOn(int tempTam, int tempDrum, int tempKick) {
-  if (tempTam == 1) digitalWrite(tamPin, HIGH);
-  if (tempDrum == 1) digitalWrite(drumPin, HIGH);
-  if (tempKick == 1) digitalWrite(kickPin, HIGH);
+  if (tempTam == 1) digitalWrite(tamPin, LOW);
+  if (tempDrum == 1) digitalWrite(drumPin, LOW);
+  if (tempKick == 1) digitalWrite(kickPin, LOW);
 
   delay(delayTime);
-  digitalWrite(tamPin, LOW);
-  digitalWrite(drumPin, LOW);
-  digitalWrite(kickPin, LOW);
+  digitalWrite(tamPin, HIGH);
+  digitalWrite(drumPin, HIGH);
+  digitalWrite(kickPin, HIGH);
 
 }
 
