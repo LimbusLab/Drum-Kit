@@ -1,5 +1,5 @@
 /*
-   Format is in b,500,t,0,1,0,1,d,1,0,1,0,k,1,1,1,1
+   Format is in b,200,t,0,0,0,0,0,0,0,0,d,0,0,0,0,0,0,0,0,k,0,0,0,0,0,0,0,0
 */
 
 
@@ -7,13 +7,13 @@ const int tamPin = 10;
 const int drumPin = 9;
 const int kickPin = 11;
 
-const int measure = 4;
+const int measure = 8;
 
 const int delayTime = 50;
 
-int tam[measure] = {0,0,0,0};
-int drum[measure] = {0,0,0,0};
-int kick[measure] = {0,0,0,0};
+int tam[measure] = {0,0,0,0,0,0,0,0};
+int drum[measure] = {0,0,0,0,0,0,0,0};
+int kick[measure] = {0,0,0,0,0,0,0,0};
 int beat = 200;
 
 void setup() {
