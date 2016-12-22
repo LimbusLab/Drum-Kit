@@ -1,9 +1,10 @@
-const int redLED = 10;
+const int redLED = 12;
 const int whiteLED = 11;
-const int blueLED = 12;
+const int blueLED = 10;
 const int switchPins[] = {2, 3, 4, 5, 6, 7, 8, 9};
 
 const int speedPot = A1;
+unsigned long previousMillis = 0;
 
 const int enterSwitch = A7;
 
@@ -11,7 +12,7 @@ boolean switchStates[] = {false, false, false, false, false, false, false, false
 
 char* beats[] = {
   ",t,1,1,0,1,0,0,1,0,d,0,0,0,0,0,0,1,0,k,0,0,1,0,0,0,1,0",
-  ",t,0,0,0,0,0,0,0,0,d,0,0,0,0,0,0,0,0,k,0,0,0,0,0,0,0,0"
+  ",t,0,0,1,0,0,0,1,0,d,0,0,0,0,0,0,0,0,k,1,0,0,0,1,0,0,0"
 };
 int beat = 200;
 
@@ -26,8 +27,16 @@ void setup() {
 }
 
 void loop() {
+  unsigned long currentMillis = millis();
   int beatReading = analogRead(speedPot);
-  beat = map(beatReading, 1023, 0, 100, 1000);
+  beat = map(beatReading, 1023, 0, 100, 250);
+  if (currentMillis - previousMillis >= beat*4) { //Multiplied by 4 to display quarter beat
+    previousMillis = currentMillis;
+    digitalWrite(redLED, HIGH);
+  }
+  if (currentMillis - previousMillis >= 50){
+    digitalWrite(redLED, LOW);
+  }
   if (analogRead(enterSwitch) == 1023) {
     readSwitches();
   }
