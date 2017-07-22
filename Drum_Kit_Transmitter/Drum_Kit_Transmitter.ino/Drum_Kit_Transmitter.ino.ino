@@ -187,7 +187,7 @@ boolean allSwitches() {
 void checkRandom(char drumSelect) {
   int randomNumber;
   if (drumSelect != 'p') randomNumber = random(0, 10);
-  else randomNumber = random(0, 20);
+  else randomNumber = random(0, 30);
   if (randomNumber <= 1) {
     int r = random(0, sizeof(drumKeys));
     Serial.write(drumKeys[r]);
