@@ -3,6 +3,8 @@ const int whiteLED = 11;
 const int blueLED = 10;
 const int switchPins[] = {2, 3, 4, 5, 6, 7, 8, 9};
 
+const char drumKeys[] = {'q', 'e', 'w', 'k', 'y', 'r', 'u'};
+
 const int speedPot = A0;
 const int switchPot = A1;
 unsigned long previousMillis = 0;
@@ -25,6 +27,7 @@ int beat = 200;
 
 void setup() {
   Serial.begin(115200);
+  randomSeed(analogRead(A3));
   pinMode(redLED, OUTPUT);
   pinMode(whiteLED, OUTPUT);
   pinMode(blueLED, OUTPUT);
@@ -80,6 +83,8 @@ void speedControl() {
   digitalWrite(blueLED, LOW);
   digitalWrite(whiteLED, LOW);
 
+  //Serial.println(allSwitches());
+
   unsigned long currentMillis = millis();
   int beatReading = analogRead(speedPot);
   beat = map(beatReading, 1023, 0, 100, 250);
@@ -99,7 +104,10 @@ void speedControl() {
 
     if (tamStates[stateLocation] == true && kickStates[stateLocation] == false && drumStates[stateLocation] == false) {
       if (sendBeats == 1) {
-        Serial.write('q');
+        if(allSwitches() == true){
+          checkRandom('q');
+        }
+        else Serial.write('q');
       }
       digitalWrite(whiteLED, HIGH);
     }
@@ -154,3 +162,23 @@ void speedControl() {
 
   }
 }
+
+boolean allSwitches() {
+  boolean switchHigh = true;
+  for (int i = 0; i < sizeof(kickStates); i++) {
+    if (digitalRead(switchPins[i]) == LOW) {
+      switchHigh = false;
+    }
+  }
+  return switchHigh;
+}
+
+void checkRandom(char drumSelect){
+  int randomNumber = random(0, 10);
+  if(randomNumber <= 1){
+    int r = random(0, sizeof(drumKeys));
+    Serial.write(drumKeys[r]);
+  }
+  else Serial.write(drumSelect);
+}
+
