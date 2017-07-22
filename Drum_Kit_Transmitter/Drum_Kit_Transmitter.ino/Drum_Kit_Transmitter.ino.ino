@@ -104,7 +104,7 @@ void speedControl() {
 
     if (tamStates[stateLocation] == true && kickStates[stateLocation] == false && drumStates[stateLocation] == false) {
       if (sendBeats == 1) {
-        if(allSwitches() == true){
+        if (allSwitches() == true) {
           checkRandom('q');
         }
         else Serial.write('q');
@@ -119,7 +119,10 @@ void speedControl() {
     }
     if (tamStates[stateLocation] == false && kickStates[stateLocation] == false && drumStates[stateLocation] == true) {
       if (sendBeats == 1) {
-        Serial.write('w');
+        if (allSwitches() == true) {
+          checkRandom('w');
+        }
+        else Serial.write('w');
       }
       digitalWrite(blueLED, HIGH);
     }
@@ -139,7 +142,10 @@ void speedControl() {
     }
     if (tamStates[stateLocation] == true && kickStates[stateLocation] == false && drumStates[stateLocation] == true) {
       if (sendBeats == 1) {
-        Serial.write('r');
+        if (allSwitches() == true) {
+          checkRandom('r');
+        }
+        else Serial.write('r');
       }
       digitalWrite(whiteLED, HIGH);
       digitalWrite(blueLED, HIGH);
@@ -151,6 +157,11 @@ void speedControl() {
       digitalWrite(whiteLED, HIGH);
       digitalWrite(blueLED, HIGH);
       digitalWrite(redLED, HIGH);
+    }
+    else {
+      if (allSwitches() == true && sendBeats == 1) {
+        checkRandom('p'); // char p will do nothing
+      }
     }
 
     stateLocation++;
@@ -173,9 +184,11 @@ boolean allSwitches() {
   return switchHigh;
 }
 
-void checkRandom(char drumSelect){
-  int randomNumber = random(0, 10);
-  if(randomNumber <= 1){
+void checkRandom(char drumSelect) {
+  int randomNumber;
+  if (drumSelect != 'p') randomNumber = random(0, 10);
+  else randomNumber = random(0, 20);
+  if (randomNumber <= 1) {
     int r = random(0, sizeof(drumKeys));
     Serial.write(drumKeys[r]);
   }
